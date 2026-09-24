@@ -2328,64 +2328,7 @@ button{
 }
 
 
-/* =========================================================
-   INNER PAGE GRID
-   ========================================================= */
 
-.page-grid{
-  display:grid;
-
-  grid-template-columns:.85fr 1.15fr;
-
-  gap:90px;
-
-  margin-top:65px;
-
-  padding-bottom:100px;
-}
-
-
-/* =========================================================
-   CONTACT DETAILS
-   ========================================================= */
-
-.contact-details{
-  display:grid;
-
-  gap:20px;
-}
-
-
-.detail-card{
-  border:1px solid var(--line);
-
-  border-radius:14px;
-
-  padding:22px;
-
-  background:rgba(9,18,31,.65);
-}
-
-
-.detail-card small{
-  display:block;
-
-  font-size:8px;
-
-  letter-spacing:.2em;
-
-  color:#718097;
-
-  margin-bottom:9px;
-}
-
-
-.detail-card a,
-.detail-card span{
-  font-size:13px;
-
-  color:#dce2ee;
-}
 
 
 /* =========================================================
@@ -3218,4 +3161,192 @@ button{
     gap:18px;
   }
 
+}
+
+
+
+
+/* =========================================================
+   INNER PAGE GRID
+   ========================================================= */
+
+.page-grid{
+  display:grid;
+
+  grid-template-columns:.85fr 1.15fr;
+
+  gap:90px;
+
+  margin-top:65px;
+
+  padding-bottom:100px;
+}
+
+
+/* =========================================================
+   CONTACT DETAILS
+   ========================================================= */
+
+.contact-details {
+  display: grid;
+  gap: 20px;
+}
+
+
+.detail-card {
+  position: relative;
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 2px 22px 1px 22px;
+
+  background: rgba(9, 18, 31, .65);
+
+  box-sizing: border-box;
+}
+
+
+/* Futuristic light sweep */
+.detail-card::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: -40%;
+
+  width: 35%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(120, 190, 255, 0.15),
+    rgba(180, 220, 255, 0.55),
+    rgba(120, 190, 255, 0.15),
+    transparent
+  );
+
+  transform: skewX(-20deg) translateX(0);
+
+  opacity: 0;
+}
+
+
+/* Activate the light sweep when hovering */
+.detail-card:hover::after {
+  opacity: 1;
+  animation: lightSweep 0.8s ease-out forwards;
+}
+
+
+/* Move the light from left to right */
+@keyframes lightSweep {
+  from {
+    transform: skewX(-20deg) translateX(0);
+  }
+
+  to {
+    transform: skewX(-20deg) translateX(400%);
+  }
+}
+
+
+/* Small heading inside the card */
+.detail-card small {
+  display: block;
+
+  font-size: 15px;
+
+  letter-spacing: .2em;
+
+  color: #718097;
+
+  margin-top: 28px;
+  margin-bottom: 18px;
+}
+
+
+/* Email / phone / other details */
+.detail-card a,
+.detail-card span {
+  font-size: 20px;
+
+  color: #dce2ee;
+
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  font-size: 15px;
+  color: #cbd4e5;
+  letter-spacing: .03em;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+
+  padding: 15px 16px;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+
+  background: rgba(7, 16, 28, .8);
+  color: var(--text);
+
+  outline: none;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.contact-form input {
+  height: 52px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 180px;
+  line-height: 1.6;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #65748d;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--blue);
+
+  box-shadow:
+    0 0 0 3px rgba(124, 167, 255, .08);
+}
+
+.contact-form .primary-btn {
+  align-self: flex-start;
+}
+
+.form-status {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #9da8bb;
 }
