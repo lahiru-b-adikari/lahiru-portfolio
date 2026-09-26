@@ -111,23 +111,47 @@ const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
 if (contactForm) {
-  contactForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  if (!name || !email || !message) {
-    formStatus.textContent = 'Please complete all fields.';
-    return;
-  }
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-  const subject = encodeURIComponent(`Portfolio message from ${name}`);
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-  window.location.href = `mailto:lahiru@example.com?subject=${subject}&body=${body}`;
-  formStatus.textContent = 'Opening your email app…';
-});
+    if (!name || !email || !message) {
+      formStatus.textContent = 'Please complete all fields.';
+      return;
+    }
 
+    formStatus.textContent = 'Sending message...';
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          message: message
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        formStatus.textContent = 'Message sent successfully. Thank you for reaching out!';
+        contactForm.reset();
+      } else {
+        formStatus.textContent = data.message;
+      }
+
+    } catch (error) {
+      console.error('Contact form error:', error);
+      formStatus.textContent = 'Unable to send the message. Please try again.';
+    }
+  });
 }
 
 document.querySelectorAll('.socials a[href="#"]').forEach(link => {
